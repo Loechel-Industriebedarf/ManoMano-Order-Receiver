@@ -9,6 +9,9 @@ require_once 'settings.php';
 */
 if(!file_exists($csvPath)){
     $xml_src = file_get_contents($api_url);
+	
+	//var_dump($xml_src);
+	
     //$xml_src = file_get_contents("test.xml");
     $xml = simplexml_load_string($xml_src, null, LIBXML_NOCDATA);
 
@@ -66,13 +69,13 @@ function generateCSV($xml, $api_url_accept){
             $csv = $csv . $productline->price . ";";
             $csv = $csv . $orderline->shipping_address->firstname . " " . $orderline->shipping_address->lastname . ";";
             $csv = $csv . $orderline->shipping_address->company . ";";
-            $csv = $csv . $orderline->shipping_address->address_1 . ";";
+            $csv = $csv . str_replace(",", "", $orderline->shipping_address->address_1) . ";";
             $csv = $csv . $orderline->shipping_address->zipcode . ";";
             $csv = $csv . $orderline->shipping_address->city . ";";
             $csv = $csv . $orderline->shipping_address->country_iso . ";";
             $csv = $csv . $orderline->billing_address->firstname . " " . $orderline->billing_address->lastname . ";";
             $csv = $csv . $orderline->billing_address->company . ";";
-            $csv = $csv . $orderline->billing_address->address_1 . ";";
+            $csv = $csv . str_replace(",", "", $orderline->billing_address->address_1) . ";";
             $csv = $csv . $orderline->billing_address->zipcode . ";";
             $csv = $csv . $orderline->billing_address->city . ";";
             $csv = $csv . $orderline->billing_address->country_iso . ";";
